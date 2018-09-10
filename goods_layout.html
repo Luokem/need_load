@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <link rel="stylesheet" href="">
+        <style>
+         * {
+            margin:  0;
+            padding: 0;
+            outline:  0;
+         }
+          ul {
+            list-style:  none;
+          }
+
+         
+
+            
+            
+
+            /* ----复制以下style---- */
+             button{
+                border: none;
+                outline:  0;
+             }
+
+             .center {
+                margin:  40px auto;
+                width:  480px;
+
+              }
+            .category {
+                width: 600px;
+                border: 1px solid #dcdcdc;
+                float: left;
+                height: 460px;
+                padding:  10px 40px 20px 40px;
+                position: relative;
+            }
+            
+        .select_txt {
+            font-size:  13px;
+            color:  #d3d3d3;
+            margin-bottom: 10px;
+        }
+
+        .select_txt span {
+            font-size:  14px;
+            color:  red;
+            margin-left:  20px;
+            font-weight: bold;
+        }
+         .box-search {
+            width: 210px;
+            height: 30px;
+            line-height: 30px;
+            border: 1px solid #dcdcdc;
+        }
+        .box-left {
+            float: left;
+            width: 170px;
+        }
+
+        .box-right {
+            float: left;
+            width: 20px;
+            height: 20px;
+            margin-top: 7px;
+            margin-left: 15px;
+            background: url(./newproduct_search.png) no-repeat;
+            cursor: pointer;
+        }
+        .category-input {
+            height: 27px;
+            line-height: 27px;
+            width: 165px;
+            padding-left: 15px;
+            border: 0;
+            outline: none;
+            margin-top:  -2px;
+
+        }
+
+        .c-detail  {
+            height:  380px;
+            overflow: auto;
+            margin-top:  10px;
+        }
+        .c-detail::-webkit-scrollbar {
+                width:  8px;
+                height:  0px;
+        }
+
+        .c-detail::-webkit-scrollbar-thumb {/*滚动条里面小方块*/
+        border-radius: 10px;
+        background: rgb(191,239,255);
+        background-size:  20px;
+        height:  50px;
+        }
+
+
+
+        .c-detail::-webkit-scrollbar-track {/*滚动条里面轨道*/
+            -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+            background-color: #d3d3d3;
+            }
+
+        .c-detail li {
+            padding:  5px 5px 5px 10px;
+            font-size:  14px;
+            cursor:  pointer;
+            word-spacing: 2px;
+        }
+
+         .c-detail li:last-child {
+            margin-bottom:  20px;
+        }
+        .c-detail li:hover {
+       background-color: #f0f4f7;
+       color:  red;
+       }
+
+       .load_more {
+        text-align: right;
+        position:  absolute;
+        bottom:  10px;
+        right:  50px;
+        width:  calc(100% - 50px);
+        display: none;
+        font-size:  13px;
+        transition: all 0.1s;
+       }
+
+       .show {
+           display: block !important;
+       }
+
+       .hidden {
+        display: none !important;
+       }
+       .model,.finished_loaded {
+        width: 100%;
+        position:  absolute;
+        bottom:  0px;
+        text-align: center;
+        vertical-align: middle;
+       }
+       .layout_win {
+        width: 200px;
+        margin:  0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+       }
+       .model {
+        height: 80px;
+        left:  0;
+        display: flex;
+        align-items: center;
+
+       }
+       .mark {
+        width:  100%;
+        height:  80px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: #000;
+        opacity: 0.2;
+       }
+       .layout_win i {
+        display: inline-block;
+        width:  24px;
+        height: 24px;
+        margin-right:  10px;
+        margin-top:  2px;
+        background:  url('./loading.gif') center no-repeat;
+       }
+
+       .finished_loaded {
+        background: radial-gradient(#d3d3d3 , #fff);
+        background: -webkit-radial-gradient(#d3d3d3 , #fff);
+        background: -moz-radial-gradient(#d3d3d3 , #fff);
+        opacity: 0.4;
+        height: 40px;
+        line-height: 40px;
+        width:  calc(100% - 40px);
+       }
+
+       .ensure_click {
+            height:  80px;
+       }
+       .ensure_click button {
+           width:  80px;        
+           height: 30px;
+           line-height: 30px;
+           background-color : rgba(66,133,244,0.6);
+           display: inline-block;
+           color:  #fff;
+           border-radius: 5px;
+           text-align: center;
+           margin-top:  50px;
+           cursor: pointer;
+        }
+        .ensure_click button["disabled"]:hover{
+           cursor: text !important;
+        }
+        .select_color {
+           background-color : rgba(66,133,244)!important; 
+        }
+
+        </style>
+    </head>
+    
+    <body>
+        <div class="center">
+        <!-- 复制以下 -->
+    
+       
+            <div class="category">
+                <div class="select_txt">您选择的是:  <span></span></div>
+                <div class="category-search">
+                    <div class="box-search">
+
+                        <span class="box-left">
+                             <input type="text" class="category-input" id="keyword1">
+                        </span>
+                         <span class="box-right"></span>
+                    </div>
+                    <div class="c-detail">
+                        <ul>
+                            
+                        </ul>
+                       <div class="finished_loaded hidden">数据已加载完了</div>
+                    </div>
+                </div>
+                <div class="model hidden">
+                    <div class="mark"></div>
+
+                    <div class="layout_win"><i></i><span>数据加载中...</span></div>
+                </div>
+                <div class="load_more">
+                        滑动加载更多
+                </div>
+                
+                   
+            </div>
+       
+            <div class="ensure_click">
+                        <button disabled="disabled">确认发布</button>
+            </div>
+            </div>
+        <script src="https://cdn.bootcss.com/jquery/1.8.3/jquery.min.js"></script>
+        <script>
+            /*
+              说明：
+              classifyData:   发送后台数据, 
+              search():  模糊搜索事件
+              scrollEvent():  滚动事件
+              clickEvent(): 点击事件
+              getData(): 获取后台详细数据
+              ensure_release(): 确认发布事件
+   
+            */
+
+            /*
+              要确定?: 
+              getData():  需要改接口,  发送字段
+              ensure_release(): 需要改接口, 发送字段, 事件回调处理
+            */
+
+            $(function() {         
+            
+            var classifyData = {
+                    page: 0, //用来判断是否显示加载更多数据
+                    code: ''
+                };
+
+
+            var category = {
+                'categoryData': [],
+                'load_more': false,
+                'scrollParameter':{
+                    'win_height': 0,
+                     'position_height':0
+                },
+                getData: function() {
+                    $('.model').removeClass('hidden')
+                    $.ajax({
+                        type: "post",
+                        url: '/categoryData',
+                        data: classifyData,  //发送数据
+                        datatype: 'json',
+                        success: function(e) {
+                            /*
+                              e: 返回对象
+                              e.data:  遍历数据
+                              e.page:  页数, 用来判断显示‘加载更多’
+                            */
+                            $('.model').addClass('hidden')
+                            category.categoryData = category.categoryData.concat(e.data)
+                            if(classifyData.page >e.page || e.page == undefined || e.data ==[]  ) {
+                              category['load_more'] = false
+                              $('.finished_loaded').removeClass('hidden')
+                              var timeId= setTimeout(()=> {
+                                $('.finished_loaded').addClass('hidden')
+                                clearTimeout(timeId)
+                              },1500)
+                            }else { 
+                                  $('.finished_loaded').addClass('hidden')                            
+                                  category['load_more'] = true
+                            }
+
+                            category.showData()
+                            
+                        },
+                        error: function(e) {
+                            $('.model').addClass('hidden')
+                            classifyData['load_more'] = true
+                            //---代填alert('error')
+                        }
+                    });
+                },
+                showData: function() {
+                    let data = category.categoryData;
+                    var detail = '';
+
+                    for(let i = 0; i< data.length-1;i++) {
+                        var text = data[i].text.replace(/\//g,"<span style='display:inline-block;margin: 0 5px;font-weight: bold;'>/</span>");
+                        detail += `<li code=${data[i].key}>${text}</li>`;
+                    }                   
+                    $('.c-detail ul').append(detail);
+                    $('.load_more').removeClass('show')
+                    category.clickEvent()  
+                    data = []
+                    category.categoryData = [] //这里没缓存数据
+                    category.scrollParameter['position_height'] = $('.c-detail ul').height()
+                    
+                },
+                scrollEvent: function() {
+                    let win_height = $('.c-detail').height();
+                    var old_scroll = 0;
+
+                    $('.c-detail').on('scroll',function() {
+                        var scrollTop =  $('.c-detail').scrollTop();
+                        let position_height = category.scrollParameter['position_height'];
+                        if( old_scroll > scrollTop){
+                            $('.load_more').removeClass('show')
+                            $('.finished_loaded').addClass('hidden')
+                        }else{
+                             if(category['load_more']) {
+                                $('.load_more').addClass('show')
+                             }                           
+                        }
+
+                        if( position_height- scrollTop - win_height < 200 ) {
+                           old_scroll= scrollTop;
+                           if(category['load_more']) {
+                             $('.load_more').addClass('show');
+                            if(position_height- scrollTop - win_height < 50 ){
+                             category['load_more'] = false
+                             classifyData.page =  classifyData.page + 1;
+                             category.getData()//加载数据
+
+                            }
+                             
+                           }
+                           if( !category['load_more']){
+                            
+                            $('.finished_loaded').removeClass('hidden')
+                           }
+                           
+                        }
+
+                        
+                    })
+                   
+                },
+                search: function() {
+                    $('.box-right').click(function() {
+                       var search_text = $('#keyword1').val().trim()
+                       if(search_text ==''){
+                        return
+                       }
+                        classifyData.page = 0;
+                         $('.model').removeClass('hidden')
+                         category.getData()
+
+                    })
+                     
+                },
+                clickEvent: function(){
+                    var li = $('.c-detail  li');
+                    
+                    for(let i = 0;i<li.length-1;i++) {
+                        $(li[i]).unbind("click").click(function(e) {
+                        $('.select_txt span').text($(this).text())
+                        $('.ensure_click button').addClass('select_color').removeAttr('disabled')
+                        classifyData.code = e.target.code;
+                    });
+                  }
+                },
+                ensure_release: function() {
+                        $.ajax({
+                        type: "post",
+                        url: '/categoryData',
+                        data: classifyData.code,
+                        datatype: 'json',
+                        success: function(e) {                         
+                            //----待填
+                        },
+                        error: function(e) {
+                            //----代填
+                        }
+                    });
+                },
+                ensure_click: function() {
+                    $('.ensure_click button').click(function(){
+                        category.ensure_release()
+                    })
+                },
+                init: function() {
+                    this.getData()
+                    this.scrollEvent()
+                    this.search()
+                    this.ensure_click()                   
+                }
+            }
+            category.init()
+        })
+            
+        </script>
+    </body>
+
+</html>
